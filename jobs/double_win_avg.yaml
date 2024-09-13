@@ -1,0 +1,206 @@
+description: example0
+ 
+target:
+  service: sing
+  name: huashanvc1
+  workspace_name: gcrllama2ws
+ 
+code:  
+  local_dir: /home/t-smantena/deep-fMRI-dataset # path to your code on local machine
+ 
+environment:
+  image: amlt-sing/acpt-rocm5.7_ubuntu20.04_py3.10_pytorch_2.0.1
+  setup:
+    # working directory is local_dir under code above
+    # - pip install . # install a package from the local directory
+    - pip install -r requirements.txt --user # install requirements from file
+ 
+storage:
+  data:
+    storage_account_name: internblobdl
+    container_name: t-smantena
+    mount_dir: /blob_data # path to mount the blob on the remote machine
+  
+# sku controls the compute you will use
+# here are some common ones you may use
+
+# cpu jobs
+# 10C3  # 4 cores, 30 GBs mem
+# 8C7   # 8 cores, 56 GBs mem
+# 8C15  # 15 cores, 120 GBs mem
+# 8C30  # 30 cores, 240 GBs mem
+# 8C60  # 60 cores, 480 GBs mem
+
+# gpu jobs
+# 64G2-MI200-xGMI-V100 # 1 V100 GPU
+# G2-V100 # 2 V100 GPUs
+# 64G2-MI200-xGMI # 1 A100 GPU
+jobs:
+  # - name: llama_window_avg_4_128
+  #   process_count_per_node: 1
+  #   sku: 64G2-MI200-xGMI
+  #   command:
+  #     - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 4 --x 128
+
+  - name: llama_window_avg_4_256
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 4 --x 256
+
+  - name: llama_window_avg_4_512
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 4 --x 512
+
+  - name: llama_window_avg_8_256
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 8 --x 256
+
+  - name: llama_window_avg_8_512
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 8 --x 512
+
+  - name: llama_window_avg_8_1024
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 8 --x 1024
+
+  - name: llama_window_avg_16_512
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 16 --x 512
+
+  - name: llama_window_avg_16_1024
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 16 --x 1024
+
+  - name: llama_window_avg_16_2048
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 16 --x 2048
+
+  - name: llama_window_avg_32_1024
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 32 --x 1024
+
+  - name: llama_window_avg_32_2048
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 32 --x 2048
+
+  - name: llama_window_avg_32_4096
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg --k 32 --x 4096
+
+  - name: llama_k_window_avg_16_512
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_avg --k 16 --x 512
+
+  - name: llama_k_window_avg_16_1024
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_avg --k 16 --x 1024
+
+  - name: llama_k_window_avg_16_2048
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_avg --k 16 --x 2048
+
+  - name: llama_k_window_16_512
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window --k 16 --x 512
+
+  - name: llama_k_window_16_1024
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window --k 16 --x 1024
+
+  - name: llama_k_window_16_2048
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window --k 16 --x 2048
+
+  - name: llama_window_avg_b_16_512
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg_b --k 16 --x 512
+
+  - name: llama_window_avg_b_16_1024
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg_b --k 16 --x 1024
+
+  - name: llama_window_avg_b_16_2048
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_window_avg_b --k 16 --x 2048
+
+  - name: llama_k_window_avg_b_16_512
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_avg_b --k 16 --x 512
+
+  - name: llama_k_window_avg_b_16_1024
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_avg_b --k 16 --x 1024
+
+  - name: llama_k_window_avg_b_16_2048
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_avg_b --k 16 --x 2048
+
+  - name: llama_k_window_b_16_512
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_b --k 16 --x 512
+
+  - name: llama_k_window_b_16_1024
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_b --k 16 --x 1024
+
+  - name: llama_k_window_b_16_2048
+    process_count_per_node: 1
+    sku: 64G2-MI200-xGMI
+    command:
+      - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_b --k 16 --x 2048
+
+
+storage:
+  data:
+    storage_account_name: internblobdl
+    container_name: t-smantena
+    mount_dir: /blob_data # path to mount the blob on the remote machine

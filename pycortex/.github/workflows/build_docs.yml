@@ -1,0 +1,51 @@
+name: Build docs
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.9
+
+    - uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/setup.py') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y inkscape
+        pip install --upgrade pip
+        pip install wheel numpy "cython<3.0" pillow
+        pip install -q ipython Sphinx sphinx-gallery numpydoc
+        pip install -e . --no-build-isolation
+        python -c 'import cortex; print(cortex.__full_version__)'
+
+    - name: Build documents
+      run: |
+        cd docs && make html && cd ..
+        touch docs/_build/html/.nojekyll
+
+    - name: Publish to gh-pages if tagged
+      if: startsWith(github.ref, 'refs/tags')
+      uses: JamesIves/github-pages-deploy-action@v4.6.1
+      with:
+        branch: gh-pages
+        folder: docs/_build/html

@@ -1,0 +1,121 @@
+description: example job
+
+target:
+  service: sing
+  name: msrresrchvc
+  workspace_name: gcrllama2ws
+
+code:  
+  local_dir: /home/t-smantena/deep-fMRI-dataset # path to your code on local machine
+
+environment:
+  image: amlt-sing/acpt-2.3.1-py3.10-cuda12.1
+  setup:
+    # working directory is local_dir under code above
+    - pip install -r requirements.txt --user # install requirements from file
+    # - pip install . # install a package from the local directory
+
+
+storage:
+  data:
+    storage_account_name: internblobdl
+    container_name: t-smantena
+    mount_dir: /blob_data # path to mount the blob on the remote machine
+
+
+jobs:
+- name: window_32
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 32 --x 4000
+- name: window_64
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 64 --x 4000
+- name: window_128
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 128 --x 4000
+- name: window_256
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 256 --x 4000
+- name: window_32_2x
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_2x --k 32 --x 4000
+- name: window_64_2x
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_2x --k 64 --x 4000
+- name: window_128_2x
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_2x --k 128 --x 4000
+- name: window_256_2x
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_2x --k 256 --x 4000
+- name: llama_64
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama --k 64 --x 4000
+- name: llama_128
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama --k 128 --x 4000
+- name: llama_256
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama --k 256 --x 4000
+- name: window_32_k
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window --k 32 --x 4000
+- name: window_64_k
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window --k 64 --x 4000
+- name: window_128_k
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window --k 128 --x 4000
+- name: window_256_k
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window --k 256 --x 4000
+- name: window_32_k_b
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_b --k 32 --x 4000
+- name: window_64_k_b
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_b --k 64 --x 4000
+- name: window_128_k_b
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_b --k 128 --x 4000
+- name: window_256_k_b
+  process_count_per_node: 1
+  sku: G1-A100
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama_k_window_b --k 256 --x 4000

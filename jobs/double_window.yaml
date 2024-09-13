@@ -1,0 +1,156 @@
+description: example0
+ 
+target:
+  service: sing
+  name: huashanvc1
+  workspace_name: gcrllama2ws
+ 
+code:  
+  local_dir: /home/t-smantena/deep-fMRI-dataset # path to your code on local machine
+ 
+environment:
+  image: amlt-sing/acpt-rocm5.7_ubuntu20.04_py3.10_pytorch_2.0.1
+  setup:
+    # working directory is local_dir under code above
+    # - pip install . # install a package from the local directory
+    - pip install -r requirements.txt --user # install requirements from file
+ 
+storage:
+  data:
+    storage_account_name: internblobdl
+    container_name: t-smantena
+    mount_dir: /blob_data # path to mount the blob on the remote machine
+  
+# sku controls the compute you will use
+# here are some common ones you may use
+
+# cpu jobs
+# 10C3  # 4 cores, 30 GBs mem
+# 8C7   # 8 cores, 56 GBs mem
+# 8C15  # 15 cores, 120 GBs mem
+# 8C30  # 30 cores, 240 GBs mem
+# 8C60  # 60 cores, 480 GBs mem
+
+# gpu jobs
+# 64G2-MI200-xGMI-V100 # 1 V100 GPU
+# G2-V100 # 2 V100 GPUs
+# 64G2-MI200-xGMI # 1 A100 GPU
+
+jobs:
+#- name: window_4_128
+  #process_count_per_node: 1
+  #sku: G1
+ # command:
+  # working directory is local_dir under code above, saves an example txt file into blob
+  #- python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 4 --x 128
+# - name: window_4_256
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 4 --x 256
+# - name: window_4_512
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 4 --x 512
+# - name: window_8_256
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 8 --x 256
+# - name: window_8_512
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 8 --x 512
+# - name: window_8_1024
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 8 --x 1024
+# - name: window_16_512
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 16 --x 512
+# - name: window_16_1024
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 16 --x 1024
+# - name: window_16_2048
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 16 --x 2048
+# - name: window_32_2048
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 32 --x 2048
+# - name: window_32_4096
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_window --k 32 --x 4096
+# - name: lb_4
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_2x --k 4
+# - name: lb_8
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_2x --k 8
+# - name: lb_16
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_2x --k 16
+# - name: lb_32
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama_2x --k 32
+# - name: l_1_word
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama --k 1
+# - name: l_2_word
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama --k 2
+# - name: l_4_word
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   # working directory is local_dir under code above, saves an example txt file into blob
+#   - python3 encoding/encoding.py --subject UTS03 --feature llama --k 4
+
+
+
+
+storage:
+  data:
+    storage_account_name: internblobdl
+    container_name: t-smantena
+    mount_dir: /blob_data # path to mount the blob on the remote machine

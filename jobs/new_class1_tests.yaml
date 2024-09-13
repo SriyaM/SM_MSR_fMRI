@@ -1,0 +1,159 @@
+description: example0
+ 
+target:
+  service: sing
+  name: huashanvc1
+  workspace_name: gcrllama2ws
+ 
+code:  
+  local_dir: /home/t-smantena/deep-fMRI-dataset # path to your code on local machine
+ 
+environment:
+  image: amlt-sing/acpt-rocm5.7_ubuntu20.04_py3.10_pytorch_2.0.1
+  setup:
+    # working directory is local_dir under code above
+    # - pip install . # install a package from the local directory
+    - pip install -r requirements.txt --user # install requirements from file
+ 
+storage:
+  data:
+    storage_account_name: internblobdl
+    container_name: t-smantena
+    mount_dir: /blob_data # path to mount the blob on the remote machine
+  
+# sku controls the compute you will use
+  
+# sku controls the compute you will use
+# here are some common ones you may use
+
+# cpu jobs
+# 10C3  # 4 cores, 30 GBs mem
+# 8C7   # 8 cores, 56 GBs mem
+# 8C15  # 15 cores, 120 GBs mem
+# 8C30  # 30 cores, 240 GBs mem
+# 64G2-MI200-xGMI  # 60 cores, 480 GBs mem
+
+# gpu jobs
+# G1-V100 # 1 V100 GPU
+# G2-V100 # 2 V100 GPUs
+# G1-A100 # 1 A100 GPU
+jobs:
+- name: 64_llama
+  process_count_per_node: 1
+  sku: 64G2-MI200-xGMI
+  command:
+  - python3 encoding/encoding.py --subject UTS03 --feature llama --k 64
+# - name: emb_rec
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/residual_viz.py
+# - name: ind16
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature ind_secs --x 16
+# - name: ind32
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature ind_secs --x 32
+# - name: ind64
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature ind_secs --x 64
+# - name: ind128
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature ind_secs --x 128
+# - name: ind512
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature ind_secs --x 512
+# - name: ind1024
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature ind_secs --x 1024
+# - name: wei8
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature weighted_secs --x 8
+# - name: wei16
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature weighted_secs --x 16
+# - name: wei32
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature weighted_secs --x 32
+# - name: wei64
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature weighted_secs --x 64
+# - name: wei128
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature weighted_secs --x 128
+# - name: wei512
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature weighted_secs --x 512
+# - name: wei1024
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature weighted_secs --x 1024
+# - name: ran8
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature random_secs --x 8
+# - name: ran16
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature random_secs --x 16
+# - name: ran32
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature random_secs --x 32
+# - name: ran64
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature random_secs --x 64
+# - name: ran128
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature random_secs --x 128
+# - name: ran512
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature random_secs --x 512
+# - name: ran1024
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature random_secs --x 1024
+
+
+
+
+# storage:
+#   data:
+#     storage_account_name: internblobdl
+#     container_name: t-smantena
+#     mount_dir: /blob_data # path to mount the blob on the remote machine

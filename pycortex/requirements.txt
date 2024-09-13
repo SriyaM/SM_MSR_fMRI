@@ -1,0 +1,16 @@
+setuptools
+future
+numpy
+scipy
+tornado>=4.3
+shapely
+lxml
+html5lib
+h5py
+numexpr
+cython<3.0
+matplotlib
+pillow
+nibabel>=2.1
+networkx>=2.1
+imageio

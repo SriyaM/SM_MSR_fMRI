@@ -1,0 +1,127 @@
+description: example0
+ 
+target:
+  service: sing
+  name: huashanvc1
+  workspace_name: gcrllama2ws
+ 
+code:  
+  local_dir: /home/t-smantena/deep-fMRI-dataset # path to your code on local machine
+ 
+environment:
+  image: amlt-sing/acpt-rocm5.7_ubuntu20.04_py3.10_pytorch_2.0.1
+  setup:
+    # working directory is local_dir under code above
+    # - pip install . # install a package from the local directory
+    - pip install -r requirements.txt --user # install requirements from file
+ 
+storage:
+  data:
+    storage_account_name: internblobdl
+    container_name: t-smantena
+    mount_dir: /blob_data # path to mount the blob on the remote machine
+  
+# sku controls the compute you will use
+  
+# sku controls the compute you will use
+# here are some common ones you may use
+
+# cpu jobs
+# 10C3  # 4 cores, 30 GBs mem
+# 8C7   # 8 cores, 56 GBs mem
+# 8C15  # 15 cores, 120 GBs mem
+# 8C30  # 30 cores, 240 GBs mem
+# 64G2-MI200-xGMI  # 60 cores, 480 GBs mem
+
+# gpu jobs
+# G1-V100 # 1 V100 GPU
+# G2-V100 # 2 V100 GPUs
+# G1-A100 # 1 A100 GPU
+# python3 encoding/encoding.py --subject UTS03 --feature incont_fuzzy_gpt
+
+jobs:
+# - name: infini_ex
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_exact --k 1.0
+# - name: infini_ran
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_random --k 1.0
+- name: infini_gpt_1
+  process_count_per_node: 1
+  sku: 64G2-MI200-xGMI
+  command:
+  - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_incont_fuzzy_gpt --x 900 --k 1.0
+# - name: infini_0.4
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_infini --x 900 --k 0.4
+# - name: infini_0.6
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_infini --x 900 --k 0.6
+# - name: infini_0.8
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_infini --x 900 --k 0.8
+# - name: infini_w_cont_0.2
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_infini_w_cont --x 900 --k 0.2
+# - name: infini_w_cont_0.4
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_infini_w_cont --x 900 --k 0.4
+# - name: infini_w_cont_0.6
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_infini_w_cont --x 900 --k 0.6
+# - name: infini_w_cont_0.8
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_infini_w_cont --x 900 --k 0.8
+# - name: incont_infini_0.2
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_incont_infini --x 900 --k 0.2
+# - name: incont_infini_0.4
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_incont_infini --x 900 --k 0.4
+# - name: incont_infini_0.6
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_incont_infini --x 900 --k 0.6
+# - name: incont_infini_0.8
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding_PResp.py --subject UTS03 --feature pca_tr_incont_infini --x 900 --k 0.8
+# - name: incont_infini
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature incont_infinigram
+# - name: infini_w_cont
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature infinigram_w_cont
+# - name: infini
+#   process_count_per_node: 1
+#   sku: 64G2-MI200-xGMI
+#   command:
+#   - python3 encoding/encoding.py --subject UTS03 --feature infinigram
